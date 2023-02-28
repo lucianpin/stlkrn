@@ -20,11 +20,11 @@ void* __cdecl operator new(size_t Size, POOL_TYPE PoolType, ULONG PoolTag) noexc
 
 #pragma warning(push)
 #pragma warning(disable : 4996) // FIXME - deprecated function
-    void* memory = ExAllocatePoolWithTag(PoolType, Size, PoolTag);
+    void* memory = ExAllocatePoolZero(PoolType, Size, PoolTag);
 #pragma warning(pop)
     if (!memory)
     {
-        throw std::bad_alloc();
+        std::_Xbad_alloc();
     }
     return memory;
 }
