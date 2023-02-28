@@ -26,6 +26,8 @@ NTSTATUS DriverEntry(
 {
     UNREFERENCED_PARAMETER(RegistryPath);
 
+    ExInitializeDriverRuntime(0);
+
     DriverObject->DriverUnload = DriverUnload;
 
     //

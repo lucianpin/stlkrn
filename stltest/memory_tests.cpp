@@ -62,14 +62,14 @@ void MemoryTests()
         UT_ASSERT(ptr.get_deleter().pool_tag == '0GAT');
         UT_ASSERT(ptr.get_deleter().pool_type == NonPagedPoolNx);
     }
-    {
-        auto ptr = jxy::make_shared<int, PagedPool, '0GAT'>(1);
-        UT_ASSERT(*ptr == 1);
-    }
-    {
-        auto ptr = jxy::make_shared<int, NonPagedPoolNx, '0GAT'>(1);
-        UT_ASSERT(*ptr == 1);
-    }
+    //{
+    //    auto ptr = jxy::make_shared<int, PagedPool, '0GAT'>(1);
+    //    UT_ASSERT(*ptr == 1);
+    //}
+    //{
+    //    auto ptr = jxy::make_shared<int, NonPagedPoolNx, '0GAT'>(1);
+    //    UT_ASSERT(*ptr == 1);
+    //}
 }
 
 }

@@ -81,13 +81,13 @@ public:
 #pragma warning(push)
 #pragma warning(disable : 4996) // FIXME - deprecated function
         auto memory = static_cast<value_type*>(
-            ExAllocatePoolWithTag(t_PoolType,
+            ExAllocatePoolZero(t_PoolType,
                                   (sizeof(value_type) * Count),
                                   t_PoolTag));
 #pragma warning(pop)
         if (!memory)
         {
-            throw std::bad_alloc();
+            std::_Xbad_alloc();
         }
         return memory;
     }
@@ -227,25 +227,25 @@ unique_ptr<T, t_PoolType, t_PoolTag> make_unique(TArgs&&... Args) noexcept(false
     return unique_ptr<T, t_PoolType, t_PoolTag>(new(t_PoolType, t_PoolTag)T(std::forward<TArgs>(Args)...));
 }
 
-template <typename T, POOL_TYPE t_PoolType, ULONG t_PoolTag>
-using shared_ptr = std::shared_ptr<T>;
-
-template <typename T, POOL_TYPE t_PoolType, ULONG t_PoolTag, typename... TArgs>
-shared_ptr<T, t_PoolType, t_PoolTag> make_shared(TArgs&&... Args) noexcept(false)
-{
-    //
-    // Rather than use make_shared here, we'll force allocate_shared.
-    // This is because there is no way to specify an allocator on make_shared 
-    // thus internally it will use the global new allocator, since jxystl aims
-    // to force tagging and typing of all allocations we avoid that at all
-    // costs.
-    // 
-    // allocate_shared enables us to specify jxy::allocator with our pool
-    // parameters and eliminates this problem.
-    //
-
-    using allocator = jxy::allocator<T, t_PoolType, t_PoolTag>;
-    return std::allocate_shared<T, allocator>(allocator(), std::forward<TArgs>(Args)...);
-}
+//template <typename T, POOL_TYPE t_PoolType, ULONG t_PoolTag>
+//using shared_ptr = std::shared_ptr<T>;
+//
+//template <typename T, POOL_TYPE t_PoolType, ULONG t_PoolTag, typename... TArgs>
+//shared_ptr<T, t_PoolType, t_PoolTag> make_shared(TArgs&&... Args) noexcept(false)
+//{
+//    //
+//    // Rather than use make_shared here, we'll force allocate_shared.
+//    // This is because there is no way to specify an allocator on make_shared 
+//    // thus internally it will use the global new allocator, since jxystl aims
+//    // to force tagging and typing of all allocations we avoid that at all
+//    // costs.
+//    // 
+//    // allocate_shared enables us to specify jxy::allocator with our pool
+//    // parameters and eliminates this problem.
+//    //
+//
+//    using allocator = jxy::allocator<T, t_PoolType, t_PoolTag>;
+//    return std::allocate_shared<T, allocator>(allocator(), std::forward<TArgs>(Args)...);
+//}
 
 }

@@ -24,7 +24,7 @@ extern void ListTests();
 extern void StackTests();
 extern void SetTests();
 
-bool RunTests() try
+bool RunTests()
 {
     ExceptionTests();
     MemoryTests();
@@ -42,14 +42,6 @@ bool RunTests() try
 
     return true;
 }
-catch (...)
-{
-    //
-    // If any unhanded exceptions occurs running the tests catch it here
-    // and assert for triage.
-    //
-    UT_ASSERT(false);
-    return false;
-}
+
 
 }
