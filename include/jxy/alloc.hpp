@@ -19,3 +19,7 @@ void __cdecl operator delete(void* Memory, POOL_TYPE PoolType, ULONG PoolTag) no
 void* __cdecl operator new[](size_t Size, POOL_TYPE PoolType, ULONG PoolTag) noexcept(false);
 
 void __cdecl operator delete[](void* Memory, POOL_TYPE PoolType, ULONG PoolTag) noexcept;
+
+void __cdecl operator delete(void* Memory) noexcept;
+
+void __cdecl operator delete(void* Memory, size_t Size) noexcept;
