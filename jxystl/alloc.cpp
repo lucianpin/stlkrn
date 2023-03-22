@@ -46,3 +46,22 @@ void __cdecl operator delete[](void* Memory, POOL_TYPE PoolType, ULONG PoolTag) 
 {
     return operator delete(Memory, PoolType, PoolTag);
 }
+
+
+// The following delete operators are needed to avoid link error
+// LNK2019: unresolved external symbol "void __cdecl operator delete(void *,unsigned __int64)"
+// referenced in function "public: void * __cdecl SomeClass::'scalar deleting destructor'(unsigned int)"
+// https://github.com/jxy-s/stlkrn/issues/13
+
+void __cdecl operator delete(void* Memory) noexcept
+{
+    UNREFERENCED_PARAMETER(Memory);
+    std::_Xinvalid_argument(nullptr);
+}
+
+void __cdecl operator delete(void* Memory, size_t Size) noexcept
+{
+    UNREFERENCED_PARAMETER(Memory);
+    UNREFERENCED_PARAMETER(Size);
+    std::_Xinvalid_argument(nullptr);
+}
